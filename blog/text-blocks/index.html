@@ -1,0 +1,291 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+  Jekyll integration by somiibo.com
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+<title>java 13/14 text blocks</title>
+<meta name="description" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/icon/favicon-16x16.png">
+<link rel="manifest" href="/assets/icon/manifest.json">
+<link rel="mask-icon" href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="/assets/icon/favicon.ico">
+<meta name="msapplication-config" content="/assets/icon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- CSS -->
+<link rel="stylesheet" href="/assets/css/main.css" />
+<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
+
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Header -->
+        <header id="header">
+          <a href="/" class="logo">ZI-VU</a>
+        </header>
+
+				<!-- Nav -->
+					<nav id="nav">
+
+            <ul class="links">
+  <li class=""><a href="/">Home</a></li>
+  <li class=" active "><a href="/blog/">Blog</a></li>
+</ul>
+
+<ul class="icons">
+  <li><a href="https://github.com/zivu" class="icon fa-github" rel="nofollow"><span class="label">GitHub</span></a></li>
+   <li><a href="https://www.youtube.com/channel/UC_5ec-wCi7x8Fdd5YJZcvlg" class="icon fa-youtube" rel="nofollow"><span class="label">GitHub</span></a></li>
+</ul>
+
+						
+					</nav>
+
+				<!-- Main -->
+				<div id="main">
+          <section class="post">
+    				<header class="major">
+      				<span class="date">23 Jun 2020</span>
+      				<h1>java 13/14 text blocks</h1>
+      				<p>The text blocks improve code readability. No escaping, new line or tabs characters appear in the string...</p>
+      			</header>
+      			<div class="image main"><img src="/images/text-blocks.png" alt=""></div>
+      			<p><p>Check out the <a href="https://openjdk.java.net/jeps/368">Official documentation</a></p>
+
+<p>Text blocks were released in jdk 13, and improved in jdk 14 with new escape sequences</p>
+
+<h2 id="jdk-13">JDK 13</h2>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">stringsBeforeJava13</span> <span class="o">=</span>
+        <span class="s">"&lt;div class=\"information trainer\"&gt;\n"</span> <span class="o">+</span>
+        <span class="s">"\t&lt;a href=\"tel:+4860694915\"&gt;&lt;span class=\"fa fa-phone\" style=\"color: rgb(255, 0, 0)\"&gt;&lt;/span&gt;&amp;nbsp; +48 606-949-15&lt;/a&gt;\n"</span> <span class="o">+</span>
+        <span class="s">"&lt;/div&gt;"</span><span class="o">;</span></code></pre></figure>
+
+<p>The text blocks improve code readability.
+No escaping, newline, or tabs characters appear in the string.
+“”” was chosen so that “ character could appear unescaped inside text blocks.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">textBlocks</span> <span class="o">=</span>
+        <span class="s">"""
+        &lt;div class="</span><span class="n">information</span> <span class="n">trainer</span><span class="s">"&gt;
+        	&lt;a href="</span><span class="nl">tel:</span><span class="o">+</span><span class="mi">4860694915</span><span class="s">"&gt;&lt;span class="</span><span class="n">fa</span> <span class="n">fa</span><span class="o">-</span><span class="n">phone</span><span class="s">" style="</span><span class="nl">color:</span> <span class="n">rgb</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">)</span><span class="s">"&gt;&lt;/span&gt;&amp;nbsp; +48 606-949-15&lt;/a&gt;
+        &lt;/div&gt;
+        """</span><span class="o">;</span></code></pre></figure>
+
+<p>The code should be in a new line after opening fat delimiters (three double-quote characters).
+No newline character will be added after compilation.
+Check out the compiled class.
+The closing””” can appear after the last character.
+If you do not want to have \n character at the end, add a closing “”” after your code.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">textBlockHtml</span> <span class="o">=</span> <span class="s">"""
+        &lt;div class="</span><span class="n">second</span><span class="o">-</span><span class="n">row</span><span class="s">"&gt;"""</span><span class="o">;</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">\"</code> - the use of escaping character permitted, but not necessary.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">textBlockWithEscapingCharacter</span> <span class="o">=</span> <span class="s">"""
+        &lt;div class=\"information trainer\"&gt;
+        """</span><span class="o">;</span></code></pre></figure>
+
+<p><code class="highlighter-rouge">\n</code> - line terminator permitted, but not necessary.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">newLineTerminatorPermitted</span> <span class="o">=</span> <span class="s">"""
+        &lt;div class="</span><span class="n">information</span> <span class="n">trainer</span><span class="s">"&gt;\n
+        """</span><span class="o">;</span></code></pre></figure>
+
+<p>Text block can be empty, but it is not recommended as it takes 2 lines of source code.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">emptyTextBlock</span> <span class="o">=</span> <span class="s">"""
+        """</span><span class="o">;</span></code></pre></figure>
+
+<p>Whitespace surrounding the content is generally(<em>) removed during compilation.
+Check out the compiled class.
+(</em>) - check out the next stringWithSpace string example.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">whitespaceSurroundingContentRemoved</span> <span class="o">=</span> <span class="s">"""
+        &lt;nav class="</span><span class="n">navbar</span> <span class="n">navbar</span><span class="o">-</span><span class="n">expand</span><span class="o">-</span><span class="n">lg</span> <span class="n">navbar</span><span class="o">-</span><span class="n">light</span> <span class="n">bg</span><span class="o">-</span><span class="n">light</span><span class="s">"&gt;              
+        """</span><span class="o">;</span></code></pre></figure>
+
+<p>But if closing fat delimiters (“””) have no leading space at all, space remains.
+That happens because of the peculiarity of the re-identation algorithm,
+that calculates how much leading space should be removed.
+It calculates the number of whitespace characters for every non-blank line
+and removes from every line the least number of whitespace.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java">        <span class="n">String</span> <span class="n">stringWithSpace</span> <span class="o">=</span> <span class="s">"""
+                  &lt;div class="</span><span class="n">second</span><span class="o">-</span><span class="n">row</span><span class="s">"&gt;
+                    &lt;div class="</span><span class="n">information</span> <span class="n">right</span><span class="o">-</span><span class="n">side</span><span class="s">"&gt;&lt;a href="</span><span class="nl">https:</span><span class="c1">//www.facebook.com" target="_blank"&gt;&lt;i class="fa fa-facebook-square" style="color: rgb(255, 0, 0)"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/div&gt;</span>
+                    <span class="o">&lt;</span><span class="n">div</span> <span class="kd">class</span><span class="err">="</span><span class="nc">information</span> <span class="n">right</span><span class="o">-</span><span class="n">side</span><span class="s">"&gt;&lt;a href="</span><span class="nl">https:</span><span class="c1">//www.youtube.com" target="_blank"&gt;&lt;i class="fa fa-youtube-play" style="color: rgb(255, 0, 0)"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/div&gt;</span>
+                    <span class="o">&lt;</span><span class="n">div</span> <span class="kd">class</span><span class="err">="</span><span class="nc">information</span> <span class="n">right</span><span class="o">-</span><span class="n">side</span><span class="s">"&gt;&lt;a href="</span><span class="nl">https:</span><span class="c1">//www.instagram.com" target="_blank"&gt;&lt;i class="fa fa-instagram" style="color: rgb(255, 0, 0)"&gt;&lt;/i&gt;&lt;/a&gt;&lt;/div&gt;</span>
+                  <span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="s">""</span><span class="err">"</span><span class="o">;</span></code></pre></figure>
+
+<p>Text blocks are indistinguishable from string literals after compilation.
+Check out the compiled code.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">textBlocksIndistinguishableFromStringLiterals</span> <span class="o">=</span> <span class="s">"""
+        &lt;span class="</span><span class="n">navbar</span><span class="o">-</span><span class="n">toggler</span><span class="o">-</span><span class="n">icon</span><span class="s">"&gt;&lt;/span&gt;
+        """</span><span class="o">;</span></code></pre></figure>
+
+<p>CR or CRLF line separators are turned into LF line separators.
+If you explicitly add escaped CR line separator it will remain with LF at the end.
+This ensures that the code is the same across the platforms.
+Check out the compiled code.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">crlfRemainsIfEscaped</span> <span class="o">=</span> <span class="s">"""
+        &lt;div id="</span><span class="n">savbor</span><span class="o">-</span><span class="n">logo</span><span class="o">-</span><span class="n">mobile</span><span class="s">"&gt;\r
+        &lt;div id="</span><span class="n">savbor</span><span class="o">-</span><span class="n">logo</span><span class="o">-</span><span class="n">tablet</span><span class="s">"&gt;"""</span><span class="o">;</span></code></pre></figure>
+
+<p>New <code class="highlighter-rouge">String::formatted(Object... args)</code> method has been added in jdk 13,
+that simplifies value substitution in text blocks.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">newStringMethodFormatted</span> <span class="o">=</span> <span class="s">"""
+            public void print(%s x) {
+                System.out.println(x);
+            }
+        """</span><span class="o">.</span><span class="na">formatted</span><span class="o">(</span><span class="n">String</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+<span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">newStringMethodFormatted</span><span class="o">);</span></code></pre></figure>
+
+<p>String literals can be concatenated with text blocks.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">concatenationOfLiteralAndTextBlock</span> <span class="o">=</span> <span class="s">"literal "</span> <span class="o">+</span> <span class="s">"""
+        text block"""</span><span class="o">;</span></code></pre></figure>
+
+<h2 id="jdk-14">JDK 14</h2>
+
+<p>Sometimes long lines are broken into smaller lines with “+”,
+but it remains one line.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">longLiteral</span> <span class="o">=</span> <span class="s">"Lorem ipsum dolor sit amet. "</span> <span class="o">+</span>
+        <span class="s">"consectetur adipiscing elit. In quam"</span><span class="o">;</span></code></pre></figure>
+
+<p>To maintain one-line strings in text blocks,
+new escape line terminator (“") has been added to java 14.
+A new escape line terminator can only be used with the text blocks.
+Check out the compiled code.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">newLineTerminatorIntroducedInJdk14</span> <span class="o">=</span> <span class="s">"""
+        Lorem ipsum dolor sit amet. \
+        consectetur adipiscing elit. In quam"""</span><span class="o">;</span></code></pre></figure>
+
+<p>In jdk 14 single space escape sequence has been introduced (“\s”).</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">singleSpaceEscapeSequence</span> <span class="o">=</span> <span class="s">"""
+        Lorem ipsum dolor sit amet\s
+        """</span><span class="o">;</span></code></pre></figure>
+
+<p>Single space escape sequences can be used in string literals as well.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">String</span> <span class="n">singleSpaceEscapeSequenceInStringLiteral</span> <span class="o">=</span> <span class="s">"Lorem ipsum\sdolor"</span><span class="o">;</span></code></pre></figure>
+
+</p>
+      		</section>
+
+          <div class="comments-wrapper">
+          <div id="disqus_thread"></div>
+          <script>
+              /**
+               *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+               *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+               */
+
+              var disqus_config = function () {
+                  this.page.url = '/blog/text-blocks/';  /*Replace PAGE_URL with your page's canonical URL variable*/
+                  this.page.identifier = '/blog/text-blocks/'; /*Replace PAGE_IDENTIFIER with your page's unique identifier variable*/
+              };
+
+              (function() {  /* dont endit below this line */
+                  var d = document, s = d.createElement('script');
+
+                  s.src = 'https://default.disqus.com/embed.js';
+
+                  s.setAttribute('data-timestamp', +new Date());
+                  (d.head || d.body).appendChild(s);
+              })();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div><!-- /.comments-wrapper -->
+
+
+					<!-- Footer -->
+						<footer>
+              <ul class="actions">
+                <li><a href="/blog/" class="button">Our Blog</a></li>
+              </ul>
+						</footer>
+					</div>
+
+				<!-- Footer -->
+        <footer id="footer">
+  <section>
+    <form method="POST" action="https://api.slapform.com/rj.pavlo.zvarych@gmail.com">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" name="slap_replyto" id="email" /> <!-- slap_replyto will set the reply-to as the submitter's email! -->
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea name="message" id="message" rows="3"></textarea>
+      </div>
+      <ul class="actions">
+        <li><input type="submit" value="Send Message" /></li>
+      </ul>
+      <input type="hidden" name="slap_redirect" value="https://zivu.github.io/thank-you" /> <!-- slap_redirect allows you to set a custom redirect/thank you page -->
+    </form>
+  </section>
+  <section class="split contact">
+    <section class="alt">
+      <h3>Location</h3>
+      <p>Warsaw, Poland</p>
+    </section>
+    <section>
+      <h3>Email</h3>
+      <p><a href="mailto:rj.pavlo.zvarych@gmail.com">rj.pavlo.zvarych@gmail.com</a></p>
+    </section>
+  </section>
+</footer>
+<!-- Copyright -->
+<div id="copyright">
+  <ul><li>&copy; zi-vu programming</li><li>Design by <a href="https://html5up.net" rel="nofollow">HTML5 UP</a></li><li>Jekyll Integration by <a href="https://slapform.com">Slapform</a> </li></ul>
+</div>
+
+
+			</div>
+
+      <!-- Scripts -->
+  		<!-- DYN -->
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/jquery.scrollex.min.js"></script>
+<script src="/assets/js/jquery.scrolly.min.js"></script>
+<script src="/assets/js/skel.min.js"></script>
+<script src="/assets/js/util.js"></script>
+<script src="/assets/js/main.js"></script>
+
+			<script async src="https://www.googletagmanager.com/gtag/js?id=default"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'default');
+</script>
+
+
+	</body>
+</html>
