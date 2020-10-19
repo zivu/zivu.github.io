@@ -1,3 +1,12 @@
+---
+layout: null
+title: zi-vu programming
+description: your easy-to-understand example-backed java tutorials
+sitemap:
+    priority: 1.0
+    lastmod: 2017-11-02
+    changefreq: weekly
+---
 <!DOCTYPE HTML>
 <!--
 	Massively by HTML5 UP
@@ -7,25 +16,7 @@
 -->
 <html>
 	<head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-
-<title>zi-vu programming</title>
-<meta name="description" content="your easy-to-understand example-backed java tutorials">
-
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/icon/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/icon/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/icon/favicon-16x16.png">
-<link rel="manifest" href="/assets/icon/manifest.json">
-<link rel="mask-icon" href="/assets/icon/safari-pinned-tab.svg" color="#5bbad5">
-<link rel="shortcut icon" href="/assets/icon/favicon.ico">
-<meta name="msapplication-config" content="/assets/icon/browserconfig.xml">
-<meta name="theme-color" content="#ffffff">
-
-<!-- CSS -->
-<link rel="stylesheet" href="/assets/css/main.css" />
-<noscript><link rel="stylesheet" href="/assets/css/noscript.css" /></noscript>
-
+    {% include head.html %}
 
 
 	</head>
@@ -36,7 +27,7 @@
 
 				<!-- Intro -->
 <!-- 					<div id="intro">
-            <h1>ZI-VU</h1>
+            <h1>{{site.title}}</h1>
 						<h2>The Jekyll Theme Version</h2>
 						<p>Massively is an HTML5 website theme designed by <a href="https://twitter.com/ajlkn">@ajlkn</a> for <a href="https://html5up.net">HTML5 UP</a><br />
 						and released for free under the <a href="https://html5up.net/license">Creative Commons license</a>. Jekyll integration by <a href="https://somiibo.com">Somiibo</a></p>
@@ -47,22 +38,13 @@
 
 				<!-- Header -->
 					<header id="header">
-						<a href="/" class="logo">ZI-VU</a>
+						<a href="{{ "/" | absolute_url }}" class="logo">{{site.title}}</a>
 					</header>
 
 				<!-- Nav -->
 					<nav id="nav">
 
-            <ul class="links">
-  <li class=" active "><a href="/">Home</a></li>
-  <li class=""><a href="/blog/">Blog</a></li>
-</ul>
-
-<ul class="icons">
-  <li><a href="https://github.com/zivu" class="icon fa-github" rel="nofollow"><span class="label">GitHub</span></a></li>
-   <li><a href="https://www.youtube.com/channel/UC_5ec-wCi7x8Fdd5YJZcvlg" class="icon fa-youtube" rel="nofollow"><span class="label">GitHub</span></a></li>
-</ul>
-
+            {% include nav.html %}
 
 					</nav>
 
@@ -74,7 +56,7 @@
 									<h2><a href="#">zi-vu java blog intro</a></h2>
 									<p>your easy-to-understand example-backed java tutorials</p>
 								</header>
-								<a href="#" class="image main"><img src="/images/intro-img.jpg" alt=""></a>
+								<a href="#" class="image main"><img src="{{ "/images/intro-img.jpg" | absolute_url }}" alt="" /></a>
                 <p>Do we need another programming blog? It looks like we have plenty of them! Well, I believe that this one is different and hope you will like it too.
 What's so special? It is code-based. We learn java by looking at examples. It is better to see with your own eyes. Check it out!</p>
 
@@ -83,132 +65,48 @@ What's so special? It is code-based. We learn java by looking at examples. It is
 
 						<!-- Posts -->
 							<section class="posts">
-                
-                
+                {% for post in site.posts limit:3 %}
+                {% assign mod3 = forloop.index | modulo: 3 %}
   								<article>
   									<header>
-  										<span class="date">24 Jun 2020</span>
-  										<h2><a href="/blog/jdk-10-local-variable-type-inference/">jdk 10/11 local variable type inference</a></h2>
+  										<span class="date">{{ post.date | date_to_string }}</span>
+  										<h2><a href="{{ post.url | absolute_url }}">{{ post.title }}</a></h2>
   									</header>
-  									<a href="/blog/jdk-10-local-variable-type-inference/" class="image fit"><img src="/images/var.png" alt=""></a>
-  									<p>Reserved type name 'var' was introduced to be used instead of explicit type declaration, where type can be deduced...</p>
+  									<a href="{{ post.url | absolute_url }}" class="image fit"><img src="{{ post.image | absolute_url }}" alt="" /></a>
+  									<p>{{ post.excerpt }}</p>
   									<ul class="actions">
-  										<li><a href="/blog/jdk-10-local-variable-type-inference/" class="button">Full Story</a></li>
+  										<li><a href="{{ post.url | absolute_url }}" class="button">Full Story</a></li>
   									</ul>
   								</article>
-<!--                    -->
-                
-                
-  								<article>
-  									<header>
-  										<span class="date">23 Jun 2020</span>
-  										<h2><a href="/blog/text-blocks/">java 13/14 text blocks</a></h2>
-  									</header>
-  									<a href="/blog/text-blocks/" class="image fit"><img src="/images/text-blocks.png" alt=""></a>
-  									<p>The text blocks improve code readability. No escaping, new line or tabs characters appear in the string...</p>
-  									<ul class="actions">
-  										<li><a href="/blog/text-blocks/" class="button">Full Story</a></li>
-  									</ul>
-  								</article>
-<!--                    -->
-                
-                
-  								<article>
-  									<header>
-  										<span class="date">22 Jun 2020</span>
-  										<h2><a href="/blog/switch-expressions/">java enhanced switch statements and switch expressions</a></h2>
-  									</header>
-  									<a href="/blog/switch-expressions/" class="image fit"><img src="/images/switch-expressions.png" alt=""></a>
-  									<p>What is the problem with the existing switch statements? Problem #1: they are error-prone. Problem #2: variable defined inside one arm has a scope of an entire block...</p>
-  									<ul class="actions">
-  										<li><a href="/blog/switch-expressions/" class="button">Full Story</a></li>
-  									</ul>
-  								</article>
-<!--                   
+<!--                   {% if mod3 == 0 %}
                   <article>
   									<header>
   										<h2><a href="#">Sponsored</a></h2>
   									</header>
 
   								</article>
-                   -->
-                
+                  {% endif %} -->
+                {% endfor %}
 
 							</section>
 
 						<!-- Footer -->
 							<footer>
                 <ul class="actions">
-                  <li><a href="/blog/" class="button">Our Blog</a></li>
+                  <li><a href="{{ "/blog/" | absolute_url }}" class="button">Our Blog</a></li>
                 </ul>
 							</footer>
 
 					</div>
 
 				<!-- Footer -->
-        <footer id="footer">
-  <section>
-    <form method="POST" action="https://api.slapform.com/rj.pavlo.zvarych@gmail.com">
-      <div class="field">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name">
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" name="slap_replyto" id="email"> <!-- slap_replyto will set the reply-to as the submitter's email! -->
-      </div>
-      <div class="field">
-        <label for="message">Message</label>
-        <textarea name="message" id="message" rows="3"></textarea>
-      </div>
-      <ul class="actions">
-        <li><input type="submit" value="Send Message"></li>
-      </ul>
-      <input type="hidden" name="slap_redirect" value="https://zivu.github.io/thank-you"> <!-- slap_redirect allows you to set a custom redirect/thank you page -->
-    </form>
-  </section>
-  <section class="split contact">
-    <section class="alt">
-      <h3>Location</h3>
-      <p>Warsaw, Poland</p>
-    </section>
-    <section>
-      <h3>Email</h3>
-      <p><a href="mailto:rj.pavlo.zvarych@gmail.com">rj.pavlo.zvarych@gmail.com</a></p>
-    </section>
-  </section>
-</footer>
-<!-- Copyright -->
-<div id="copyright">
-  <ul>
-<li>© zi-vu programming</li>
-<li>Design by <a href="https://html5up.net" rel="nofollow">HTML5 UP</a>
-</li>
-<li>Jekyll Integration by <a href="https://slapform.com">Slapform</a> </li>
-</ul>
-</div>
-
+        {% include foot.html %}
 
 			</div>
 
 		<!-- Scripts -->
-		<!-- DYN -->
-<script src="/assets/js/jquery.min.js"></script>
-<script src="/assets/js/jquery.scrollex.min.js"></script>
-<script src="/assets/js/jquery.scrolly.min.js"></script>
-<script src="/assets/js/skel.min.js"></script>
-<script src="/assets/js/util.js"></script>
-<script src="/assets/js/main.js"></script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=default"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments)};
-  gtag('js', new Date());
-
-  gtag('config', 'default');
-</script>
-
+		{% include scripts-main.html %}
+    {% include tracking.html %}
 
 	</body>
 </html>
