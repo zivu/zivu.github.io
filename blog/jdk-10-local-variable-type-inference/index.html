@@ -1,0 +1,346 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+  Jekyll integration by somiibo.com
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+<title>jdk 10/11 local variable type inference</title>
+<meta name="description" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://zivu.github.io/assets/icon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zivu.github.io/assets/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://zivu.github.io/assets/icon/favicon-16x16.png">
+<link rel="manifest" href="https://zivu.github.io/assets/icon/manifest.json">
+<link rel="mask-icon" href="https://zivu.github.io/assets/icon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="https://zivu.github.io/assets/icon/favicon.ico">
+<meta name="msapplication-config" content="https://zivu.github.io/assets/icon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://zivu.github.io/assets/css/main.css" />
+<noscript><link rel="stylesheet" href="https://zivu.github.io/assets/css/noscript.css" /></noscript>
+
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Header -->
+        <header id="header">
+          <a href="https://zivu.github.io/" class="logo">ZI-VU</a>
+        </header>
+
+				<!-- Nav -->
+					<nav id="nav">
+
+            <ul class="links">
+  <li class=""><a href="https://zivu.github.io/">Home</a></li>
+  <li class=" active "><a href="https://zivu.github.io/blog/">Blog</a></li>
+</ul>
+
+<ul class="icons">
+  <li><a href="https://github.com/zivu" class="icon fa-github" rel="nofollow"><span class="label">GitHub</span></a></li>
+   <li><a href="https://www.youtube.com/channel/UC_5ec-wCi7x8Fdd5YJZcvlg" class="icon fa-youtube" rel="nofollow"><span class="label">GitHub</span></a></li>
+</ul>
+
+						
+					</nav>
+
+				<!-- Main -->
+				<div id="main">
+          <section class="post">
+    				<header class="major">
+      				<span class="date">24 Jun 2020</span>
+      				<h1>jdk 10/11 local variable type inference</h1>
+      				<p>Reserved type name 'var' was introduced to be used instead of explicit type declaration, where type can be deduced...</p>
+      			</header>
+      			<div class="image main"><img src="/images/var.png" alt=""></div>
+      			<p></p>
+<p><a href="https://openjdk.java.net/jeps/286">Official documentation</a> <br>
+<a href="https://openjdk.java.net/projects/amber/LVTIstyle.html">Style guidelines</a></p>
+
+<p>This lesson includes local variable type inference from JDK 10
+and local variable syntax for lambda parameters (JDK 11).
+Reserved type name ‘var’ was introduced to be used instead of the explicit type declaration, where type can be deduced.</p>
+
+<h2 id="how-to-use-var">How to use ‘var’?</h2>
+
+<p>1) local variable declarations with initializer;</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">var</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;();</span>
+<span class="n">users</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"Tom"</span><span class="o">);</span>
+<span class="n">users</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s">"Jim"</span><span class="o">);</span></code></pre></figure>
+
+<p>2) enhanced for-loop</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span> <span class="o">(</span><span class="n">var</span> <span class="n">user</span> <span class="o">:</span> <span class="n">users</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>3) traditional for-loop</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">for</span> <span class="o">(</span><span class="n">var</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">users</span><span class="o">.</span><span class="na">size</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">users</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>4) try with resources</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">try</span> <span class="o">(</span><span class="n">var</span> <span class="n">scanner</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Scanner</span><span class="o">(</span><span class="k">new</span> <span class="n">File</span><span class="o">(</span><span class="s">"src/main/resources/example.txt"</span><span class="o">)))</span> <span class="o">{</span>
+    <span class="k">while</span> <span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">scanner</span><span class="o">.</span><span class="na">nextLine</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span> <span class="k">catch</span> <span class="o">(</span><span class="n">FileNotFoundException</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>5) with anonymous classes</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Runnable</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"var is allowed with anonymous classes"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">};</span>
+<span class="n">x</span><span class="o">.</span><span class="na">run</span><span class="o">();</span></code></pre></figure>
+
+<p>6) casting lambda expressions to intersection types</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">varIsAllowedInCastingLambdaExpressionsToIntersectionTypes</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="o">(</span><span class="n">LogSystem</span> <span class="o">&amp;</span> <span class="n">Serializable</span><span class="o">)</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"implementation"</span><span class="o">);</span>
+    <span class="n">x</span><span class="o">.</span><span class="na">print</span><span class="o">();</span>
+<span class="o">}</span></code></pre></figure>
+
+<h2 id="how-to-not-use-var">How to not use ‘var’?</h2>
+
+<p>1) <code class="highlighter-rouge">var</code> cannot be used in catch clauses</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="k">catch</span> <span class="o">(</span><span class="n">var</span> <span class="n">e</span><span class="o">)</span> <span class="o">{</span>
+	<span class="n">e</span><span class="o">.</span><span class="na">printStackTrace</span><span class="o">();</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>2) <code class="highlighter-rouge">var</code> not allowed for method type declaration</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">varNotAllowedForMethodArgumentTypeDeclaration</span><span class="o">(</span><span class="n">var</span> <span class="n">illegalVarDeclaration</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">illegalVarDeclaration</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>3) <code class="highlighter-rouge">var</code> cannot be used to define constructor arguments type</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="nf">VarExamples</span><span class="o">(</span><span class="n">var</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>4) <code class="highlighter-rouge">var</code> cannot be used as a method return type</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="n">var</span> <span class="nf">varCannotBeUsedAsMethodReturnType</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="s">"example"</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>5) <code class="highlighter-rouge">var</code> not allowed to be used as a field type</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="n">var</span> <span class="n">varNotAllowedToBeUsedAsFieldType</span><span class="o">;</span></code></pre></figure>
+
+<p>6) <code class="highlighter-rouge">var</code> not allowed as a target type of lambda expression</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">var</span> <span class="n">serialNumber</span> <span class="o">=</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="s">"&amp;"</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span></code></pre></figure>
+
+<p>7) null cannot be assigned to <code class="highlighter-rouge">var</code></p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span></code></pre></figure>
+
+<p>8) <code class="highlighter-rouge">var</code> cannot be used with array initializer</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="o">{</span><span class="s">"one"</span><span class="o">,</span> <span class="s">"two"</span><span class="o">};</span></code></pre></figure>
+
+<h2 id="var-is-not-a-keyword-it-is-reserved-type-name-hence">‘var’ is not a keyword, it is reserved type name, hence:</h2>
+
+<p>1) you can use var as a variable name. you cannot do it with keywords.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">var</span> <span class="o">=</span><span class="s">"t"</span><span class="o">;</span>
+<span class="c1">//  private final String class = "";</span></code></pre></figure>
+
+<p>2) you can use it as a package name;</p>
+
+<p>3) you can use it as a method name</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">var</span><span class="o">()</span> <span class="o">{}</span></code></pre></figure>
+
+<p>4) we cannot create a class name with a name var</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="c1">//  public static class var {}</span></code></pre></figure>
+
+<p>5) we cannot name interface as ‘var’</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">var</span> <span class="o">{}</span></code></pre></figure>
+
+<h2 id="java-11">Java 11</h2>
+
+<p>Java 11 allows using var in lambda expressions.</p>
+<ol>
+  <li>(var x, var y) -&gt; x + “-“ + y … is the same as … (x, y) -&gt; x + “-“ + y</li>
+  <li>This change is a further enhancement of var usage in java, that was introduced in jdk 10.</li>
+  <li>var allows us usage of annotations (<a href="https://github.com/NotNull" class="user-mention">@NotNull</a> for example).</li>
+  <li>var cannot be mixed with no var.</li>
+  <li>var cannot be mixed with explicitly typed parameters (e.i. int)</li>
+  <li>var should be used for all lambda formal parameters not be used at all.</li>
+</ol>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">combineSerialNumberAndPrint</span><span class="o">(</span><span class="n">String</span> <span class="n">classification</span><span class="o">,</span> <span class="n">String</span> <span class="n">no</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">BiFunction</span><span class="o">&lt;</span><span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">serialNumber</span> <span class="o">=</span> <span class="o">(</span><span class="n">var</span> <span class="n">x</span><span class="o">,</span> <span class="n">var</span> <span class="n">y</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="s">"-"</span> <span class="o">+</span> <span class="n">y</span><span class="o">;</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">serialNumber</span><span class="o">.</span><span class="na">apply</span><span class="o">(</span><span class="n">classification</span><span class="o">,</span> <span class="n">no</span><span class="o">));</span>
+<span class="o">}</span></code></pre></figure>
+
+<h2 id="lombok-alternative-var-and-val">lombok alternative: ‘var’ and ‘val’</h2>
+
+<p>Explicit import required:</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kn">import</span> <span class="nn">lombok.var</span><span class="o">;</span></code></pre></figure>
+
+<h2 id="pitfalls">Pitfalls</h2>
+
+<p>Be careful using var with diamonds &lt;&gt;.
+Type inference for generic methods relies on the target type (what on the left of ‘=’).
+For ‘var inferredQueue’ inferred type is PriorityQueue<object> might be not what we might expect.
+Can be mitigated by providing constructors with parameters.</object></p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">varPitfallsWithDiamonds</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">queue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PriorityQueue</span><span class="o">&lt;&gt;();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">queue</span><span class="o">);</span>
+    <span class="n">var</span> <span class="n">inferredQueue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PriorityQueue</span><span class="o">&lt;&gt;();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">inferredQueue</span><span class="o">);</span>
+    <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">comparator</span> <span class="o">=</span> <span class="o">(</span><span class="n">o1</span><span class="o">,</span> <span class="n">o2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="n">var</span> <span class="n">correctInferredQueue</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PriorityQueue</span><span class="o">&lt;&gt;(</span><span class="n">comparator</span><span class="o">);</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">correctInferredQueue</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>It is a common practice in java to construct a concrete instance and assign it to an interface type.
+If ‘var’ is used, the inferred type is a concrete instance, instead of an interface.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">varPitfallsWithList</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">users</span><span class="o">);</span>
+    <span class="n">var</span> <span class="n">workers</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;();</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">workers</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>With a numeric type on the left, a type might be widened or narrowed to types other than int.
+With ‘var’ type is always int.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kt">void</span> <span class="nf">pitfallWithNumericLiterals</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">byte</span> <span class="n">point</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">short</span> <span class="n">hash</span> <span class="o">=</span> <span class="mh">0x77f</span><span class="o">;</span>
+    <span class="kt">long</span> <span class="n">id</span> <span class="o">=</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="n">var</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">34</span><span class="o">;</span>
+<span class="o">}</span></code></pre></figure>
+
+
+      		</section>
+
+          <!-- <div class="comments-wrapper"> -->
+          <!-- <div id="disqus_thread"></div> -->
+          <!-- <script>
+              /**
+               *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+               *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+               */
+
+              var disqus_config = function () {
+                  this.page.url = '/blog/jdk-10-local-variable-type-inference/';  /*Replace PAGE_URL with your page's canonical URL variable*/
+                  this.page.identifier = '/blog/jdk-10-local-variable-type-inference/'; /*Replace PAGE_IDENTIFIER with your page's unique identifier variable*/
+              };
+
+              (function() {  /* dont endit below this line */
+                  var d = document, s = d.createElement('script');
+
+                  s.src = 'https://default.disqus.com/embed.js';
+
+                  s.setAttribute('data-timestamp', +new Date());
+                  (d.head || d.body).appendChild(s);
+              })();
+          </script> -->
+<!--           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div> /.comments-wrapper --> 
+
+
+					<!-- Footer -->
+						<footer>
+              <ul class="actions">
+                <li><a href="https://zivu.github.io/blog/" class="button">Our Blog</a></li>
+              </ul>
+						</footer>
+					</div>
+
+				<!-- Footer -->
+        <footer id="footer">
+  <section>
+    <form method="POST" action="https://api.slapform.com/rj.pavlo.zvarych@gmail.com">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name">
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" name="slap_replyto" id="email"> <!-- slap_replyto will set the reply-to as the submitter's email! -->
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea name="message" id="message" rows="3"></textarea>
+      </div>
+      <ul class="actions">
+        <li><input type="submit" value="Send Message"></li>
+      </ul>
+      <input type="hidden" name="slap_redirect" value="https://zivu.github.io/thank-you"> <!-- slap_redirect allows you to set a custom redirect/thank you page -->
+    </form>
+  </section>
+  <section class="split contact">
+    <section class="alt">
+      <h3>Location</h3>
+      <p>Warsaw, Poland</p>
+    </section>
+    <section>
+      <h3>Email</h3>
+      <p><a href="mailto:rj.pavlo.zvarych@gmail.com">rj.pavlo.zvarych@gmail.com</a></p>
+    </section>
+  </section>
+</footer>
+<!-- Copyright -->
+<div id="copyright">
+  <ul>
+<li>© zi-vu programming</li>
+<li>Design by <a href="https://html5up.net" rel="nofollow">HTML5 UP</a>
+</li>
+<li>Jekyll Integration by <a href="https://slapform.com">Slapform</a> </li>
+</ul>
+</div>
+
+
+			</div>
+
+      <!-- Scripts -->
+  		<!-- DYN -->
+<script src="https://zivu.github.io/assets/js/jquery.min.js"></script>
+<script src="https://zivu.github.io/assets/js/jquery.scrollex.min.js"></script>
+<script src="https://zivu.github.io/assets/js/jquery.scrolly.min.js"></script>
+<script src="https://zivu.github.io/assets/js/skel.min.js"></script>
+<script src="https://zivu.github.io/assets/js/util.js"></script>
+<script src="https://zivu.github.io/assets/js/main.js"></script>
+
+			<script async src="https://www.googletagmanager.com/gtag/js?id=default"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'default');
+</script>
+
+
+	</body>
+</html>

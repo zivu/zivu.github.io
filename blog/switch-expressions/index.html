@@ -1,0 +1,343 @@
+<!DOCTYPE HTML>
+<!--
+	Massively by HTML5 UP
+	html5up.net | @ajlkn
+  Jekyll integration by somiibo.com
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+<title>java enhanced switch statements and switch expressions</title>
+<meta name="description" content="">
+
+<link rel="apple-touch-icon" sizes="180x180" href="https://zivu.github.io/assets/icon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://zivu.github.io/assets/icon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://zivu.github.io/assets/icon/favicon-16x16.png">
+<link rel="manifest" href="https://zivu.github.io/assets/icon/manifest.json">
+<link rel="mask-icon" href="https://zivu.github.io/assets/icon/safari-pinned-tab.svg" color="#5bbad5">
+<link rel="shortcut icon" href="https://zivu.github.io/assets/icon/favicon.ico">
+<meta name="msapplication-config" content="https://zivu.github.io/assets/icon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+
+<!-- CSS -->
+<link rel="stylesheet" href="https://zivu.github.io/assets/css/main.css" />
+<noscript><link rel="stylesheet" href="https://zivu.github.io/assets/css/noscript.css" /></noscript>
+
+	</head>
+	<body class="is-loading">
+
+		<!-- Wrapper -->
+			<div id="wrapper" class="fade-in">
+
+				<!-- Header -->
+        <header id="header">
+          <a href="https://zivu.github.io/" class="logo">ZI-VU</a>
+        </header>
+
+				<!-- Nav -->
+					<nav id="nav">
+
+            <ul class="links">
+  <li class=""><a href="https://zivu.github.io/">Home</a></li>
+  <li class=" active "><a href="https://zivu.github.io/blog/">Blog</a></li>
+</ul>
+
+<ul class="icons">
+  <li><a href="https://github.com/zivu" class="icon fa-github" rel="nofollow"><span class="label">GitHub</span></a></li>
+   <li><a href="https://www.youtube.com/channel/UC_5ec-wCi7x8Fdd5YJZcvlg" class="icon fa-youtube" rel="nofollow"><span class="label">GitHub</span></a></li>
+</ul>
+
+						
+					</nav>
+
+				<!-- Main -->
+				<div id="main">
+          <section class="post">
+    				<header class="major">
+      				<span class="date">22 Jun 2020</span>
+      				<h1>java enhanced switch statements and switch expressions</h1>
+      				<p>What is the problem with the existing switch statements? Problem #1: they are error-prone. Problem #2: variable defined inside one arm has a scope of an entire block...</p>
+      			</header>
+      			<div class="image main"><img src="/images/switch-expressions.png" alt=""></div>
+      			<p><p>Check out the <a href="https://openjdk.java.net/jeps/361">Official documentation</a></p>
+
+<p>What is the problem with the existing switch statements?
+Problem #1: they are error-prone.
+A developer might forget to add a break statement. This will lead to an unexpected result.
+Try to call this method with “lynca mobile” input.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printInternetPackageForCellularOperator</span><span class="o">(</span><span class="n">String</span> <span class="n">cellularOperator</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">cellularOperator</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"virgin mobile"</span><span class="o">:</span>
+        <span class="k">case</span> <span class="s">"orange"</span><span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"15 GB"</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="k">case</span> <span class="s">"lynca mobile"</span><span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"11 GB"</span><span class="o">);</span>
+        <span class="k">case</span> <span class="s">"vodaphone"</span><span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"5 GB"</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="k">case</span> <span class="s">"viking"</span><span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"12 GB"</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"unknown cellular operator"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Enhanced switch statements were introduced.vOnly expressions on the right of -&gt; will be executed.
+This solved problem #1 mentioned above.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printPriceOfBusinessSubscriptionForCellularOperator</span><span class="o">(</span><span class="n">String</span> <span class="n">cellularOperator</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">cellularOperator</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"virgin mobile"</span><span class="o">,</span> <span class="s">"orange"</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"15$"</span><span class="o">);</span>
+        <span class="k">case</span> <span class="s">"lynca"</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"20$"</span><span class="o">);</span>
+        <span class="k">case</span> <span class="s">"vodaphone"</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"10$"</span><span class="o">);</span>
+        <span class="k">case</span> <span class="s">"viking"</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"12$"</span><span class="o">);</span>
+        <span class="k">default</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"unknown cellular operator"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>What is the problem with the existing switch statements?
+Problem #2: variable defined inside one arm has a scope of an entire block.
+Another arm/case cannot use the same variable name.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printClassOfAnimal</span><span class="o">(</span><span class="n">String</span> <span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"cat"</span><span class="o">:</span>
+            <span class="kt">int</span> <span class="n">classNumber</span> <span class="o">=</span> <span class="mi">1</span><span class="o">;</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">classNumber</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="k">case</span> <span class="s">"dog"</span><span class="o">:</span>
+<span class="c1">//                int classNumber = 2;</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"classNumber variable is already defined in the first arm"</span><span class="o">);</span>
+            <span class="k">break</span><span class="o">;</span>
+        <span class="k">case</span> <span class="s">"tiger"</span><span class="o">:</span>
+<span class="c1">//                int teclassNumbermp = 3;</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"the same as in the second arm: variable defined"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Enhanced switch statements solve problem #2 mentioned above.
+A variable inside one arm has a scope of this arm.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">checkRegistrationNumberForAnimal</span><span class="o">(</span><span class="n">String</span> <span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">switch</span> <span class="o">(</span><span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"cat"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">1234</span><span class="o">;</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">temp</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">case</span> <span class="s">"dog"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">temp</span> <span class="o">=</span> <span class="mi">2456</span><span class="o">;</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"animal registration number: "</span> <span class="o">+</span> <span class="n">temp</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Switch expression example. A default case is required if the enum is not used in a case. For enum, example look at printNameAssociatedWithId(Numbers) method below.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printDomesticAnimalClass</span><span class="o">(</span><span class="n">String</span> <span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">animalClass</span> <span class="o">=</span> <span class="k">switch</span> <span class="o">(</span><span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"dog"</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">case</span> <span class="s">"cat"</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="k">default</span> <span class="o">-&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="n">IllegalStateException</span><span class="o">(</span><span class="s">"Unexpected value: "</span> <span class="o">+</span> <span class="n">animal</span><span class="o">);</span>
+    <span class="o">};</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"animal class is "</span> <span class="o">+</span> <span class="n">animalClass</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Switch expression can be passed and argument to methods.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printAssociatedNumber</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">switch</span> <span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"one"</span> <span class="o">-&gt;</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">case</span> <span class="s">"two"</span> <span class="o">-&gt;</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="k">default</span> <span class="o">-&gt;</span> <span class="mi">777</span><span class="o">;</span>
+    <span class="o">});</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Jdk 14 introduced the ‘yield’ statement to return value.
+‘yield’ is a restricted identifier and no class can be named that way.
+Switch expression must either produce value or throw an exception.
+If you try to comment yield statement compiler will complain.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printAssociatedClassWithAnimal</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">animalClass</span> <span class="o">=</span> <span class="k">switch</span> <span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"one"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"first arm"</span><span class="o">);</span>
+            <span class="n">yield</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">case</span> <span class="s">"two"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"second arm"</span><span class="o">);</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">IllegalArgumentException</span><span class="o">(</span><span class="s">"second arm used"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">default</span> <span class="o">-&gt;</span> <span class="mi">3</span><span class="o">;</span>
+    <span class="o">};</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"animal class is:"</span> <span class="o">+</span> <span class="n">animalClass</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>Switch expression can use a traditional representation with colon label “:”.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printAnimalClassificationName</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">animalClass</span> <span class="o">=</span> <span class="k">switch</span> <span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"one"</span><span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"first arm"</span><span class="o">);</span>
+            <span class="n">yield</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="k">case</span> <span class="s">"two"</span><span class="o">:</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"second arm"</span><span class="o">);</span>
+            <span class="n">yield</span> <span class="mi">2</span><span class="o">;</span>
+        <span class="k">default</span><span class="o">:</span>
+            <span class="n">yield</span> <span class="mi">3</span><span class="o">;</span>
+    <span class="o">};</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"animal class is:"</span> <span class="o">+</span> <span class="n">animalClass</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<h2 id="interesting-case">Interesting case</h2>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="cm">/**
+ * Auxiliary method to be used with printAnimalWithTypeInformation(String) method
+ */</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="n">String</span> <span class="nf">yield</span><span class="o">(</span><span class="n">String</span> <span class="n">x</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="s">" - referenced"</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="cm">/**
+ * What yield("class 1 " + animal) will return?
+ * - "class 1 " + animal
+ *  OR
+ * - "class 1 " + animal + " - referenced"
+ */</span>
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printAnimalWithTypeInformation</span><span class="o">(</span><span class="n">String</span> <span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">message</span> <span class="o">=</span> <span class="k">switch</span> <span class="o">(</span><span class="n">animal</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="s">"dog"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"customer has a dog"</span><span class="o">);</span>
+            <span class="n">yield</span><span class="o">(</span><span class="s">"class 1 "</span> <span class="o">+</span> <span class="n">animal</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">case</span> <span class="s">"cat"</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"customer has a cat"</span><span class="o">);</span>
+            <span class="n">yield</span> <span class="o">(</span><span class="s">"class 2"</span> <span class="o">+</span> <span class="n">animal</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">default</span> <span class="o">-&gt;</span> <span class="s">"unknown animal"</span><span class="o">;</span>
+    <span class="o">};</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>The default case is not required in case of the enum (if we cover all cases). If omitted it will be added by the compiler.
+It is not even recommended to add default case, to throw an exception to indicate unexpected value.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">private</span> <span class="kd">enum</span> <span class="n">Numbers</span> <span class="o">{</span>
+    <span class="n">ONE</span><span class="o">,</span>
+    <span class="n">TWO</span><span class="o">,</span>
+    <span class="n">THREE</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">printNameAssociatedWithId</span><span class="o">(</span><span class="n">Numbers</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="k">switch</span> <span class="o">(</span><span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">case</span> <span class="n">ONE</span> <span class="o">-&gt;</span> <span class="s">"Tomas"</span><span class="o">;</span>
+        <span class="k">case</span> <span class="n">TWO</span> <span class="o">-&gt;</span> <span class="s">"John"</span><span class="o">;</span>
+        <span class="k">case</span> <span class="n">THREE</span> <span class="o">-&gt;</span> <span class="s">"Peter"</span><span class="o">;</span>
+    <span class="o">};</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
+
+</p>
+      		</section>
+
+          <!-- <div class="comments-wrapper"> -->
+          <!-- <div id="disqus_thread"></div> -->
+          <!-- <script>
+              /**
+               *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+               *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+               */
+
+              var disqus_config = function () {
+                  this.page.url = '/blog/switch-expressions/';  /*Replace PAGE_URL with your page's canonical URL variable*/
+                  this.page.identifier = '/blog/switch-expressions/'; /*Replace PAGE_IDENTIFIER with your page's unique identifier variable*/
+              };
+
+              (function() {  /* dont endit below this line */
+                  var d = document, s = d.createElement('script');
+
+                  s.src = 'https://default.disqus.com/embed.js';
+
+                  s.setAttribute('data-timestamp', +new Date());
+                  (d.head || d.body).appendChild(s);
+              })();
+          </script> -->
+<!--           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        </div> /.comments-wrapper --> 
+
+
+					<!-- Footer -->
+						<footer>
+              <ul class="actions">
+                <li><a href="https://zivu.github.io/blog/" class="button">Our Blog</a></li>
+              </ul>
+						</footer>
+					</div>
+
+				<!-- Footer -->
+        <footer id="footer">
+  <section>
+    <form method="POST" action="https://api.slapform.com/rj.pavlo.zvarych@gmail.com">
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" name="slap_replyto" id="email" /> <!-- slap_replyto will set the reply-to as the submitter's email! -->
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea name="message" id="message" rows="3"></textarea>
+      </div>
+      <ul class="actions">
+        <li><input type="submit" value="Send Message" /></li>
+      </ul>
+      <input type="hidden" name="slap_redirect" value="https://zivu.github.io/thank-you" /> <!-- slap_redirect allows you to set a custom redirect/thank you page -->
+    </form>
+  </section>
+  <section class="split contact">
+    <section class="alt">
+      <h3>Location</h3>
+      <p>Warsaw, Poland</p>
+    </section>
+    <section>
+      <h3>Email</h3>
+      <p><a href="mailto:rj.pavlo.zvarych@gmail.com">rj.pavlo.zvarych@gmail.com</a></p>
+    </section>
+  </section>
+</footer>
+<!-- Copyright -->
+<div id="copyright">
+  <ul><li>&copy; zi-vu programming</li><li>Design by <a href="https://html5up.net" rel="nofollow">HTML5 UP</a></li><li>Jekyll Integration by <a href="https://slapform.com">Slapform</a> </li></ul>
+</div>
+
+
+			</div>
+
+      <!-- Scripts -->
+  		<!-- DYN -->
+<script src="https://zivu.github.io/assets/js/jquery.min.js"></script>
+<script src="https://zivu.github.io/assets/js/jquery.scrollex.min.js"></script>
+<script src="https://zivu.github.io/assets/js/jquery.scrolly.min.js"></script>
+<script src="https://zivu.github.io/assets/js/skel.min.js"></script>
+<script src="https://zivu.github.io/assets/js/util.js"></script>
+<script src="https://zivu.github.io/assets/js/main.js"></script>
+
+			<script async src="https://www.googletagmanager.com/gtag/js?id=default"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments)};
+  gtag('js', new Date());
+
+  gtag('config', 'default');
+</script>
+
+
+	</body>
+</html>
