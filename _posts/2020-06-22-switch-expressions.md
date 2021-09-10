@@ -61,11 +61,11 @@ private static void printClassOfAnimal(String animal) {
             System.out.println(classNumber);
             break;
         case "dog":
-//                int classNumber = 2;
+//          int classNumber = 2;
             System.out.println("classNumber variable is already defined in the first arm");
             break;
         case "tiger":
-//                int teclassNumbermp = 3;
+//          int teclassNumbermp = 3;
             System.out.println("the same as in the second arm: variable defined");
     }
 }
